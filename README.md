@@ -197,12 +197,6 @@ Merge PRs with a merge commit, never squash. New clones should use
 `git clone --recurse-submodules`; existing clones use
 `git submodule update --init --recursive` after pulling.
 
-## Evidence and publication
-
-The published [v0.9.0 Zenodo deposit](https://doi.org/10.5281/zenodo.22167102)
-remains frozen in the software repository. A new deposit requires a separately
-reviewed version; this migration does not change that deposit or its metadata.
-
 ## History and license
 
 The LaTeX directory's commit history was extracted from Benchmark Radar at
