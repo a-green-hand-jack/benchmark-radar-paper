@@ -675,9 +675,11 @@ ScienceBoard~\citep{sun2025scienceboard} & \xmark & \cmark & \xmark & Manual & \
 \section{Reproducibility, Access, and Citation}
 \label{app:reproducibility}
 
-This revision uses the \href{https://github.com/ktwu01/benchmark-radar/releases/tag/v0.11.0}{Benchmark Radar v0.11.0 release}, software commit \gitcommit{}, with a discovery cutoff of \datacutoff{}. The release preserves the inputs already audited for this paper; later data is outside its scope. A fresh detached checkout passed the six required CI steps in order: linting, formatting checks, catalog normalization, classification, release construction, and tests. The dated registry inputs remain the August snapshots registered in \texttt{data/leaderboard\_snapshots.yml}; the September cutoff does not imply that those sources were recrawled on that day.
+This revision uses the \href{https://github.com/ktwu01/benchmark-radar/releases/tag/v0.11.0}{Benchmark Radar v0.11.0 release} (software commit \gitcommit{}), with a discovery cutoff of \datacutoff{}. Registry inputs are the August snapshots recorded in that release; they were not recrawled at the September cutoff. The release archive contains the catalog index, per-benchmark detail records, the document and model registries, discovery observations, and dated snapshots, with a SHA-256 hash for each input.
 
-The data build normalizes the registry and model-report inputs into the shared catalog, then classifies discovery tracks and packages the catalog with checksums. Installed clients validate an update before activating it. The manuscript and its dated analysis files build independently of the software checkout. The project provides a Citation File Format record for citation \citep{smith2016,katz2021,cff}. Table~\ref{tab:access-artifacts} lists the access and citation resources.
+Every number, table, and figure in this paper is generated from that archive. The software's exporter writes the figure inputs. Two audit scripts in the paper repository compute the rest: the catalog audit validates source-record IDs, checks that each score observation is counted once and that scored and unscored records reconcile with the catalog total, and computes the census; the findings audit computes the document, score, and date analyses. Both retain every source-record ID and record the input hashes, and a check mode recomputes their outputs for comparison with the published values.
+
+Table~\ref{tab:access-artifacts} lists the access and citation resources. The project also provides a Citation File Format record \citep{smith2016,katz2021,cff}.
 
 \begin{center}
 \centering
@@ -698,16 +700,7 @@ Citation metadata & \url{https://github.com/ktwu01/benchmark-radar/blob/main/CIT
 \label{tab:access-artifacts}
 \end{center}
 
-The census reads \texttt{site/data/benchmark-index.json}, the detail shards under \texttt{site/data/benchmarks/}, and the shared document and model registries. Discovery counts come from the rebuilt \texttt{site/data/radar.json} and dated snapshots. Model reports and score YAML files are normalization inputs, not a separate population for the paper's findings.
-
-The paper repository contains \texttt{scripts/audit\_catalog.py}, which validates IDs and counts, computes the census, and exports \texttt{catalog-data.tex} plus \texttt{evidence/catalog-audit.json}. The JSON includes every source-record key, measurement state, per-record model and document counts, citation IDs, and SHA-256 hashes of the inputs. The script checks score-observation uniqueness, record-to-shard identity, document-registry coverage, and reconciliation of scored and unscored records. Its \texttt{--check} mode compares a fresh calculation against the committed outputs. Figure~\ref{fig:corpus-evidence} draws one linked dot per census record in source-key order.
-
-Reproduce from a clean checkout at software commit \gitcommit{} using the README's six-step CI sequence. The software exporter writes \texttt{figure-data.tex}; the paper's \texttt{audit\_catalog.py} and \texttt{audit\_findings.py} take the rebuilt software path. The findings audit writes \texttt{findings-data.tex} and \texttt{evidence/catalog-findings.json} plus a CSV export. Every analysis retains exactly the catalog's source-record IDs. It records native score maxima and all tied observations, units, settings, cited documents, model counts, and date evidence. Table cells and repeated numeric claims are generated from these same inputs. Run each exporter's \texttt{--check} mode, build with \texttt{make arxiv}, compile the extracted package, and inspect the PDF. Normal builds use the committed inputs.
-
 \section*{Licensing}
-Software: MIT License. The paper and original editorial content: CC BY-NC-SA 4.0;
-Commercial republication, resale, paid newsletters, dataset packaging, or commercial
-product integration requires prior written permission from Koutian Wu. Third-party
-source material remains under its original terms.
+The software is released under the MIT License. This paper and the project's original editorial content are released under CC BY-NC-SA 4.0. Third-party source material remains under its original terms.
 
 \end{document}
